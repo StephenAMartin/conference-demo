@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'uk.co.olcs'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+project.task("task1")
+
+task Task4
+Task4.description = "Task4 Description"
+Task4.doLast {println "This is task 4"}
+
+
+repositories {
+	mavenCentral()
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'uk.co.olcs.MainClass'
+	}
+}
+
+apply plugin: 'war'
+
+
+dependencies {
+	implementation( 'org.springframework.boot:spring-boot-starter-web') {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-jetty'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
